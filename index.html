@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfoBits</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <link rel="manifest" href="manifest.json"> <!-- Link to your Web Manifest -->
+</head>
+<body>
+    <div class="container">
+        <h1>InfoBits</h1>
+
+        <!-- Centered dropdown and refresh button row -->
+        <div class="top-controls">
+            <select id="setSelect" onchange="loadSet()">
+                <option value="" disabled selected>Select a flashcard set</option>
+                <option value="set1">Set 1</option>
+                <option value="set2">Set 2</option>
+                <option value="set3">Set 3</option>
+                <option value="set4">Set 4</option>
+                <option value="set5">Set 5</option>
+                <option value="set6">Set 6</option>
+                <option value="set7">Set 7</option>
+                <option value="set8">Set 8</option>
+                <option value="set9">Set 9</option>
+                <option value="set10">Set 10</option>
+            </select>
+            <button id="refreshButton" onclick="refreshSet()">🔄</button>
+        </div>
+
+        <!-- Flashcard display area styled as a card, enlarged -->
+        <div class="flashcard">
+            <div id="termDisplay">Select a flashcard set to begin.</div>
+            <div id="definitionDisplay" class="definitionDisplay">Definition will appear here.</div>
+        </div>
+
+        <!-- Button controls for previous, show, next -->
+        <div class="controls">
+            <button id="prevButton" onclick="previousCard()" style="visibility: hidden;">Previous Card</button>
+            <button onclick="showDefinition()">Show Definition</button>
+            <button id="nextButton" onclick="nextCard()">Next Card</button>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz-section">
+            <button onclick="startQuiz()">Start Quiz</button>
+            <div id="optionsContainer" style="display: none;"></div>
+            <button id="backToFlashcards" onclick="endQuiz()" style="display: none;">Back to Flashcards</button>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script> <!-- Link to your JavaScript file with 'defer' to ensure it loads after HTML -->
+
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js')
+          .then((registration) => {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch((error) => {
+            console.error('Service Worker registration failed:', error);
+          });
+      }
+    </script>
+</body>
+</html>
