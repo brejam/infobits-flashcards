@@ -121,6 +121,7 @@ function initializeFlashcardSets() {
     ],
 };
 
+ // Check local storage and update if data exists
     for (let setName in defaultSets) {
         const savedSet = localStorage.getItem(setName);
         if (savedSet) {
@@ -134,7 +135,7 @@ function initializeFlashcardSets() {
 let currentSet = [];
 let currentTermIndex = 0;
 
-// Function to load selected flashcard set
+// Load selected flashcard set
 function loadSet() {
     const selectElement = document.getElementById('setSelect');
     const selectedSet = selectElement.value;
@@ -149,11 +150,10 @@ function loadSet() {
         document.getElementById('definitionDisplay').innerText = '';
     }
 
-    // Set button visibility for the start of a new set
-    updateNavigationButtons();
+    updateNavigationButtons(); // Update button visibility for new set
 }
 
-// Display the term based on current index
+// Display the current term based on the index
 function displayTerm() {
     if (currentSet.length > 0) {
         document.getElementById('termDisplay').innerText = currentSet[currentTermIndex].term;
@@ -162,7 +162,7 @@ function displayTerm() {
     }
 }
 
-// Show definition for the current term
+// Show the definition of the current term
 function showDefinition() {
     if (currentSet.length > 0) {
         const definition = currentSet[currentTermIndex].definition;
@@ -170,27 +170,27 @@ function showDefinition() {
     }
 }
 
-// Navigate to the next card
+// Navigate to the next flashcard
 function nextCard() {
     if (currentTermIndex < currentSet.length - 1) {
         currentTermIndex++;
         displayTerm();
         document.getElementById('definitionDisplay').innerText = ''; // Clear previous definition
-        updateNavigationButtons(); // Update button visibility after moving to the next card
+        updateNavigationButtons();
     }
 }
 
-// Navigate to the previous card
+// Navigate to the previous flashcard
 function previousCard() {
     if (currentTermIndex > 0) {
         currentTermIndex--;
         displayTerm();
         document.getElementById('definitionDisplay').innerText = ''; // Clear previous definition
-        updateNavigationButtons(); // Update button visibility after moving to the previous card
+        updateNavigationButtons();
     }
 }
 
-// Update navigation buttons visibility based on position
+// Update visibility of navigation buttons
 function updateNavigationButtons() {
     const nextButton = document.getElementById('nextButton');
     const prevButton = document.getElementById('prevButton');
@@ -199,58 +199,102 @@ function updateNavigationButtons() {
     prevButton.style.visibility = currentTermIndex > 0 ? 'visible' : 'hidden';
 }
 
-// Refresh current set to start from the beginning
-function refreshSet() {
-    currentTermIndex = 0;
-    displayTerm();
-    document.getElementById('definitionDisplay').innerText = ''; // Clear definition
-    updateNavigationButtons(); // Ensure button visibility is updated
+// Shuffle the current set of flashcards
+function shuffleSet() {
+    if (currentSet.length > 0) {
+        for (let i = currentSet.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [currentSet[i], currentSet[j]] = [currentSet[j], currentSet[i]];
+        }
+        currentTermIndex = 0;
+        displayTerm();
+        document.getElementById('definitionDisplay').innerText = ''; // Clear definition
+        updateNavigationButtons();
+    }
 }
 
-// Start quiz mode
-function startQuiz() {
-    if (currentSet.length < 4) {
-        alert("Not enough terms to start the quiz. Please add more terms.");
-        return;
+// Quiz mode functionality
+let quizSet = [];
+let quizIndex = 0;
+let score = 0;
+
+// Build a 20-term randomized quiz set across all sets without duplication
+function buildQuizSet() {
+    const allTerms = [];
+    for (let setName in flashcardSets) {
+        allTerms.push(...flashcardSets[setName]);
     }
 
-    // Hide flashcard view, buttons, and refresh button; show quiz options
-    document.getElementById('termDisplay').style.display = 'none';
-    document.getElementById('definitionDisplay').style.display = 'none';
-    document.querySelectorAll('.controls button').forEach(button => {
-        button.style.display = 'none';
-    });
-    document.querySelector(".quiz-section button").style.display = "none";
-    document.getElementById('refreshButton').style.display = 'none'; // Hide refresh button
+    const selectedTerms = [];
+    while (selectedTerms.length < 20 && allTerms.length > 0) {
+        const randomIndex = Math.floor(Math.random() * allTerms.length);
+        selectedTerms.push(allTerms.splice(randomIndex, 1)[0]);
+    }
 
+    return selectedTerms;
+}
+
+// Start the quiz with a 20-term randomized set
+function startQuiz() {
+    quizSet = buildQuizSet();
+    quizIndex = 0;
+    score = 0;
+
+    // Show quiz interface and hide flashcard elements
     document.getElementById('optionsContainer').style.display = 'block';
     document.getElementById('backToFlashcards').style.display = 'inline-block';
+    document.getElementById('questionCounter').style.display = 'inline-block'; // Show question counter
+    document.getElementById('scoreTracker').style.display = 'inline-block';    // Show score tracker
+    document.querySelectorAll('.controls button').forEach(button => button.style.display = 'none');
+    document.getElementById('setSelect').style.display = 'none'; // Hide set dropdown
+    document.getElementById('shuffleButton').style.display = 'none'; // Hide shuffle button
+    document.querySelector(".quiz-section button").style.display = 'none'; // Hide Start Quiz button
 
-    // Set up a random quiz question
-    const correctIndex = Math.floor(Math.random() * currentSet.length);
-    const correctTerm = currentSet[correctIndex];
+    document.getElementById('definitionDisplay').innerText = ''; // Clear definition display
+    updateQuizInfo();
+    displayQuizQuestion(); // Display the first question
+}
+
+// Update question counter and score
+function updateQuizInfo() {
+    document.getElementById('questionCounter').innerText = `Question ${quizIndex + 1}/20`;
+    document.getElementById('scoreTracker').innerText = `Score: ${score}`;
+}
+
+// Display the current quiz question with more relevant multiple-choice options
+function displayQuizQuestion() {
+    const termDisplay = document.getElementById('termDisplay');
+    const buttonsContainer = document.getElementById('optionsContainer');
+    
+    // Clear previous options
+    buttonsContainer.innerHTML = '';
+
+    // Get the current quiz term and display its definition as the question
+    const correctTerm = quizSet[quizIndex];
+    termDisplay.innerText = `Definition: ${correctTerm.definition}`;
+
+    // Extract keywords from the correct term's definition
+    const keywords = extractKeywords(correctTerm.definition);
+
+    // Generate options with closer relevance
     let options = [correctTerm];
+    const similarOptions = findSimilarOptions(correctTerm, keywords);
 
+    while (options.length < 4 && similarOptions.length > 0) {
+        options.push(similarOptions.pop());
+    }
+
+    // Fill remaining spots with random terms if needed
     while (options.length < 4) {
-        const randomIndex = Math.floor(Math.random() * currentSet.length);
-        const randomTerm = currentSet[randomIndex];
+        const randomIndex = Math.floor(Math.random() * quizSet.length);
+        const randomTerm = quizSet[randomIndex];
         if (!options.includes(randomTerm)) {
             options.push(randomTerm);
         }
     }
 
-    // Shuffle options to randomize the answer placement
+    // Shuffle and display the options
     options = options.sort(() => Math.random() - 0.5);
-
-    // Display the definition as the question prompt
-    const termDisplay = document.getElementById('termDisplay');
-    termDisplay.innerText = `Definition: ${correctTerm.definition}`;
-    termDisplay.style.display = 'block';
-
-    // Display multiple-choice options
-    const buttonsContainer = document.getElementById('optionsContainer');
-    buttonsContainer.innerHTML = '';
-
     options.forEach(option => {
         const button = document.createElement('button');
         button.className = 'quiz-option';
@@ -260,31 +304,97 @@ function startQuiz() {
     });
 }
 
-// Check quiz answer and proceed to next question
-function checkAnswer(selectedTerm, correctTerm) {
-    if (selectedTerm.term === correctTerm.term) {
-        alert("Correct!");
-    } else {
-        alert(`Incorrect. The correct answer is: ${correctTerm.term}`);
-    }
-    startQuiz(); // Proceed to the next question
+// Helper function to extract significant keywords from a definition
+function extractKeywords(definition) {
+    return definition.split(' ')
+        .filter(word => word.length > 3) // Filter out short, common words
+        .map(word => word.toLowerCase());
 }
 
-// End quiz mode and return to flashcards
-function endQuiz() {
-    // Show flashcard view and refresh button again
-    document.getElementById('termDisplay').style.display = 'block';
-    document.getElementById('definitionDisplay').style.display = 'block';
-    document.querySelectorAll('.controls button').forEach(button => {
-        button.style.display = 'inline-block';
-    });
-    document.getElementById('refreshButton').style.display = 'inline-block'; // Show refresh button again
+// Find similar options based on keyword overlap
+function findSimilarOptions(correctTerm, keywords) {
+    return quizSet.filter(term => {
+        if (term === correctTerm) return false;
+        const termKeywords = extractKeywords(term.definition);
+        const commonKeywords = termKeywords.filter(word => keywords.includes(word));
+        return commonKeywords.length > 0;
+    }).sort(() => Math.random() - 0.5).slice(0, 3); // Limit to top 3 matches
+}
 
-    // Reset the quiz view
-    document.querySelector(".quiz-section button").style.display = "inline-block";
+// Check the quiz answer and provide feedback
+function checkAnswer(selectedTerm, correctTerm) {
+    const buttons = document.querySelectorAll('.quiz-option');
+
+    // Provide visual feedback
+    buttons.forEach(button => {
+        if (button.innerText === correctTerm.term) {
+            button.style.backgroundColor = '#4caf50'; // Green for correct
+        } else if (button.innerText === selectedTerm.term) {
+            button.style.backgroundColor = '#e74c3c'; // Red for incorrect
+        }
+    });
+
+    // Update score if correct
+    if (selectedTerm.term === correctTerm.term) {
+        score++;
+    }
+
+    updateQuizInfo(); // Update score display
+
+    // Delay before moving to the next question
+    setTimeout(() => {
+        quizIndex++;
+        if (quizIndex < 20) {
+            displayQuizQuestion();
+        } else {
+            endQuiz();
+        }
+    }, 1000); // 1-second delay for feedback
+}
+
+// End the quiz and display the final score
+function endQuiz() {
+    // Hide quiz elements and show final score
+    document.getElementById('termDisplay').innerText = `Quiz Complete! You scored ${score} out of 20.`;
     document.getElementById('optionsContainer').style.display = 'none';
     document.getElementById('backToFlashcards').style.display = 'none';
 
-    // Reset flashcard content
-    document.getElementById('termDisplay').innerText = 'Select a flashcard set to begin.';
+    const restartButton = document.createElement('button');
+    restartButton.innerText = 'Restart Quiz';
+    restartButton.onclick = startQuiz;
+    restartButton.className = 'quiz-option';
+    
+    const exitButton = document.createElement('button');
+    exitButton.innerText = 'Exit Quiz Mode';
+    exitButton.onclick = endQuizMode;
+    exitButton.className = 'quiz-option';
+
+    const buttonsContainer = document.getElementById('optionsContainer');
+    buttonsContainer.innerHTML = ''; // Clear options
+    buttonsContainer.style.display = 'block'; // Show container for buttons
+    buttonsContainer.appendChild(restartButton);
+    buttonsContainer.appendChild(exitButton);
 }
+
+// Return to flashcard mode from quiz
+function endQuizMode() {
+    document.getElementById('termDisplay').innerText = 'Select a flashcard set to begin.';
+    document.getElementById('definitionDisplay').innerText = 'Definition will appear here.';
+    document.getElementById('optionsContainer').style.display = 'none';
+    document.getElementById('backToFlashcards').style.display = 'none';
+    document.getElementById('questionCounter').style.display = 'none'; // Hide question counter
+    document.getElementById('scoreTracker').style.display = 'none';    // Hide score tracker
+    document.querySelectorAll('.controls button').forEach(button => button.style.display = 'inline-block');
+    document.getElementById('setSelect').style.display = 'inline-block';
+    document.getElementById('shuffleButton').style.display = 'inline-block';
+    document.querySelector(".quiz-section button").style.display = 'inline-block'; // Show Start Quiz button
+}
+
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/service-worker.js")
+            .then((registration) => console.log("Service Worker registered with scope:", registration.scope))
+            .catch((err) => console.log("Service Worker registration failed:", err));
+    });
+}
+

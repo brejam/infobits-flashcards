@@ -7,7 +7,7 @@ body, html {
     display: flex;
     align-items: start;
     justify-content: center;
-    font-family: Arial, sans-serif;
+    font-family: 'Comic Neue', sans-serif;
     background: linear-gradient(135deg, #dfe6e9, #b2bec3);
     color: #333;
 }
@@ -29,7 +29,7 @@ body, html {
 /* Centered, larger title */
 h1 {
     font-size: 4rem;
-    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    font-family: 'Comic Neue', sans-serif; /* Updated font-family */
     color: #2d3436;
     text-align: center;
     margin: 0 0 15px 0;
@@ -85,6 +85,13 @@ h1 {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    transition: opacity 0.5s ease, transform 0.3s ease; /* Smooth transition for flashcard */
+}
+
+/* Hidden state for flashcard transitions */
+.flashcard.hidden {
+    opacity: 0;
+    transform: scale(0.95);
 }
 
 /* Term display */
@@ -165,6 +172,31 @@ button:disabled {
     margin-top: 20px;
 }
 
+/* Feedback message styling */
+.feedback {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #4caf50; /* Green for correct, updated via JS if incorrect */
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.feedback.show {
+    opacity: 1;
+}
+
+/* Quiz mode styling */
+.quiz-mode .flashcard {
+    background-color: #f0f8ff;
+}
+
 /* Responsive scaling */
 @media (max-width: 768px) {
     h1 {
@@ -174,3 +206,114 @@ button:disabled {
         font-size: 1rem;
     }
 }
+
+/* Quiz option feedback */
+.quiz-option {
+    width: 100%;
+    padding: 15px;
+    margin: 8px 0;
+    font-size: 1.3rem;
+    background-color: #ecf0f1;
+    border: 1px solid #b2bec3;
+    color: #2d3436;
+    border-radius: 8px;
+    transition: background-color 0.3s, box-shadow 0.2s;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-option:hover {
+    background-color: #dcdde1;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Correct and incorrect feedback colors are managed in JavaScript */
+.quiz-option.correct {
+    background-color: #4caf50 !important; /* Green for correct */
+    color: white;
+}
+
+.quiz-option.incorrect {
+    background-color: #e74c3c !important; /* Red for incorrect */
+    color: white;
+}
+
+/* Final score styling */
+#termDisplay {
+    font-size: 2.5rem;
+    color: #333;
+    text-align: center;
+    margin: 20px 0;
+}
+/* Updated layout for quiz info */
+#quizInfo {
+    display: none; /* Hidden by default; shown in quiz mode */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 15px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+#questionCounter {
+    font-weight: bold;
+    margin-left: 10px; /* Align to left */
+}
+
+#scoreDisplay {
+    font-weight: bold;
+    color: #0984e3;
+    margin-right: 10px; /* Align to right */
+}
+
+/* Styling for quiz options */
+.quiz-option {
+    width: 100%;
+    padding: 15px;
+    margin: 8px 0;
+    font-size: 1.3rem;
+    background-color: #ecf0f1;
+    border: 1px solid #b2bec3;
+    color: #2d3436;
+    border-radius: 8px;
+    transition: background-color 0.3s, box-shadow 0.2s;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.quiz-option:hover {
+    background-color: #dcdde1;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.quiz-option.correct {
+    background-color: #4caf50; /* Green for correct answers */
+}
+
+.quiz-option.incorrect {
+    background-color: #e74c3c; /* Red for incorrect answers */
+}
+
+#shuffleButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #0984e3;
+    padding: 0; /* Remove padding */
+    line-height: 1; /* Tighten up the icon size */
+}
+
+#shuffleButton:hover {
+    color: #74b9ff;
+}
+
+/* Question counter and score tracker - hidden by default */
+#questionCounter, #scoreTracker {
+    display: none;
+    font-size: 1.2rem;
+    margin: 0 10px;
