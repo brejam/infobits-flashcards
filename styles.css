@@ -365,3 +365,47 @@ h1 {
 #termDisplay, #definitionDisplay {
     font-size: 1.2rem;
 }
+/* Flashcard Section: Slightly reduce height */
+.flashcard {
+    width: 100%;
+    max-width: 500px; /* Slightly reduce max width */
+    height: 70vh;     /* Reduce height to fit more content on screen */
+    overflow: auto;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+/* Quiz Section: Compact adjustments */
+.quiz-section {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 10px; /* Reduce top margin */
+    padding: 10px;    /* Add padding for smaller screens */
+    overflow: auto;
+}
+
+/* Quiz Option Button Sizing */
+.quiz-option {
+    font-size: 1rem;   /* Slightly smaller text */
+    padding: 10px;     /* Reduce padding for better fit */
+    margin: 5px 0;     /* Reduce vertical margin */
+    box-sizing: border-box;
+}
+
+/* Back to Flashcards Button */
+#backToFlashcards {
+    margin-top: 15px;
+    font-size: 1rem;
+    padding: 10px 15px;
+}
+
+/* Question Counter and Score Tracker */
+#quizInfo {
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+    margin-top: 10px;
+}
