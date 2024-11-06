@@ -317,3 +317,51 @@ button:disabled {
     display: none;
     font-size: 1.2rem;
     margin: 0 10px;
+}
+
+/* Make the container take up the full screen height */
+html, body {
+    height: 100%;
+    overflow: hidden; /* Prevents page scrolling */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full viewport height */
+    padding: 10px; /* Small padding for a cleaner look on mobile */
+    box-sizing: border-box; /* Ensures padding doesn’t add extra width */
+    overflow: hidden; /* Prevents container overflow */
+}
+
+/* Adjust flashcard size to fit mobile screens */
+.flashcard {
+    width: 100%;
+    max-width: 600px; /* Optional max width for larger devices */
+    height: 80vh; /* Allows room for navigation controls */
+    overflow: auto; /* Enables scrolling within the flashcard if content overflows */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Button resizing for smaller screens */
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 6px;
+    margin: 5px;
+}
+
+/* Resize text for smaller screens */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+#termDisplay, #definitionDisplay {
+    font-size: 1.2rem;
+}
