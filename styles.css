@@ -5,12 +5,12 @@ body, html {
     width: 100%;
     height: 100%;
     display: flex;
-    align-items: start;
+    align-items: center;
     justify-content: center;
     font-family: 'Comic Neue', sans-serif;
     background: linear-gradient(135deg, #dfe6e9, #b2bec3);
     color: #333;
-    overflow: hidden;
+    overflow: hidden; /* Prevents page scrolling */
 }
 
 /* Main container */
@@ -19,13 +19,14 @@ body, html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    max-width: 500px;
     width: 100%;
-    height: 100vh;
+    max-width: 500px;
+    height: 100vh; /* Full height of the viewport */
     padding: 5px;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
     overflow: hidden;
 }
 
@@ -39,8 +40,8 @@ h1 {
 
 /* Flashcard styling */
 .flashcard {
-    max-width: 500px;
     width: 100%;
+    max-width: 500px;
     height: 50vh;
     padding: 10px;
     background-color: #ffffff;
@@ -139,9 +140,8 @@ button:hover {
 #optionsContainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center; /* Add this to vertically center if needed */
-    width: 100%; /* Full width to center buttons properly */
+    align-items: center; /* Center align the buttons */
+    width: 75%; /* Full width */
 }
 
 /* Quiz option buttons */
@@ -149,7 +149,7 @@ button:hover {
     font-size: 0.9rem;
     padding: 8px;
     margin: 5px 0;
-    width: 80%; /* Adjust this width to ensure buttons are centered */
+    width: 90%; /* Adjust width to center buttons properly */
     max-width: 400px;
     color: #2d3436;
     background-color: #ecf0f1;
