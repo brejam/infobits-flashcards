@@ -2,56 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InfoBits Flashcards</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap">
-	<link rel="manifest" href="manifest.json">
 </head>
 <body>
     <div class="container">
         <h1>InfoBits Flashcards</h1>
 
-        <!-- Dropdown and Shuffle Button -->
+        <!-- Flashcard Set Buttons -->
         <div class="top-controls">
-            <select id="setSelect" onchange="loadSet()">
-                <option value="" disabled selected>Select a flashcard set</option>
-                <option value="set1">Set 1</option>
-                <option value="set2">Set 2</option>
-                <option value="set3">Set 3</option>
-                <option value="set4">Set 4</option>
-                <option value="set5">Set 5</option>
-                <option value="set6">Set 6</option>
-                <option value="set7">Set 7</option>
-                <option value="set8">Set 8</option>
-                <option value="set9">Set 9</option>
-                <option value="set10">Set 10</option>
-            </select>
+            <button onclick="selectSet('set1')">Set 1</button>
+            <button onclick="selectSet('set2')">Set 2</button>
+            <button onclick="selectSet('set3')">Set 3</button>
+            <button onclick="selectSet('set4')">Set 4</button>
+            <button onclick="selectSet('set5')">Set 5</button>
+            <button onclick="selectSet('set6')">Set 6</button>
+            <button onclick="selectSet('set7')">Set 7</button>
+            <button onclick="selectSet('set8')">Set 8</button>
+            <button onclick="selectSet('set9')">Set 9</button>
+            <button onclick="selectSet('set10')">Set 10</button>
         </div>
 
         <!-- Flashcard Display -->
-        <div class="flashcard" style="position: relative;">
-            <button id="shuffleButton" onclick="shuffleSet()">🔄</button> <!-- Shuffle button with icon only -->
+        <div class="flashcard">
+            <!-- Shuffle button should be present but hidden initially -->
+            <button id="shuffleButton" onclick="shuffleSet()" style="display: none;">🔄</button>
             <div id="termDisplay">Select a flashcard set to begin.</div>
             <div id="definitionDisplay" class="definitionDisplay">Definition will appear here.</div>
         </div>
 
         <!-- Navigation Controls for Previous, Show Definition, and Next -->
         <div class="controls">
-            <button id="prevButton" onclick="previousCard()" style="visibility: hidden;">Previous Card</button>
-            <button onclick="showDefinition()">Show Definition</button>
-            <button id="nextButton" onclick="nextCard()">Next Card</button>
+            <button id="prevButton" onclick="previousCard()" style="display: none;">Previous Card</button>
+            <button id="showDefinitionButton" onclick="showDefinition()" style="display: none;">Show Definition</button>
+            <button id="nextButton" onclick="nextCard()" style="display: none;">Next Card</button>
         </div>
 
         <!-- Quiz Section -->
         <div class="quiz-section">
-            <button onclick="startQuiz()">Start Quiz</button>
+            <button id="startQuizButton" onclick="startQuiz()">Start Quiz</button>
             <div id="quizInfo">
-                <span id="questionCounter">Question 1/20</span>
-                <span id="scoreTracker">Score: 0</span>
+                <span id="questionCounter" style="display: none;">Question 1/20</span>
+                <span id="scoreTracker" style="display: none;">Score: 0</span>
             </div>
+            <!-- Options container for quiz questions -->
             <div id="optionsContainer" style="display: none;"></div>
-            <button id="backToFlashcards" onclick="endQuiz()" style="display: none;">Back to Flashcards</button>
+            <button id="backToFlashcards" onclick="endQuizMode()" style="display: none;">Back to Flashcards</button>
         </div>
     </div>
 
