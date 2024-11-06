@@ -22,7 +22,7 @@ body, html {
     width: 100%;
     max-width: 500px;
     height: 100vh; /* Full viewport height */
-    padding: 15px;
+    padding: 5px; /* Reduce padding to fit more content */
     background-color: #ffffff;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
@@ -30,45 +30,45 @@ body, html {
     overflow: hidden;
 }
 
-/* Centered, smaller title for mobile */
+/* Title styling for mobile */
 h1 {
-    font-size: 2.5rem; /* Smaller size for mobile */
+    font-size: 2rem; /* Smaller title size for mobile */
     color: #2d3436;
     text-align: center;
-    margin: 5px 0 15px 0;
+    margin: 5px 0 10px 0;
 }
 
-/* Dropdown and refresh button container */
+/* Dropdown and shuffle button container */
 .top-controls {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 5px; /* Reduced spacing for mobile */
 }
 
 /* Flashcard set selection dropdown */
 #setSelect {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #333;
     background-color: #ecf0f1;
     border: 1px solid #b2bec3;
     border-radius: 5px;
-    padding: 8px;
-    width: 60%; /* Slightly narrower for mobile */
+    padding: 5px;
+    width: 60%; /* Narrower for mobile */
     text-align: center;
 }
 
 /* Flashcard box styling for mobile */
 .flashcard {
     width: 100%;
-    max-width: 500px; /* Ensure it fits mobile */
-    height: 60vh; /* Reduce height to fit on screen */
-    padding: 15px;
+    max-width: 500px;
+    height: 50vh; /* Reduce height further */
+    padding: 10px; /* Reduced padding */
     margin: 10px 0;
     background-color: #ffffff;
     border: 2px solid #b2bec3;
-    border-radius: 15px;
+    border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
@@ -78,17 +78,17 @@ h1 {
     box-sizing: border-box;
 }
 
-/* Term and definition text for flashcards */
+/* Text for term and definition */
 #termDisplay {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: #2d3436;
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 #definitionDisplay {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: #555;
     text-align: center;
     font-weight: bold;
@@ -96,7 +96,7 @@ h1 {
 
 /* Button styling for mobile */
 button {
-    padding: 10px 20px;
+    padding: 8px 15px; /* Smaller padding for mobile */
     font-size: 1rem;
     border: none;
     border-radius: 8px;
@@ -104,7 +104,7 @@ button {
     color: white;
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.2s;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
     width: 90%; /* Full width for mobile */
     max-width: 250px;
     margin: 5px 0;
@@ -112,13 +112,13 @@ button {
 
 button:hover {
     background-color: #74b9ff;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 #backToFlashcards {
     background-color: #ff6b6b;
-    font-size: 1rem;
-    padding: 10px;
+    font-size: 0.9rem; /* Slightly smaller for mobile */
+    padding: 8px;
     margin-top: 10px;
 }
 
@@ -133,8 +133,8 @@ button:hover {
 
 /* Quiz options for mobile */
 .quiz-option {
-    font-size: 1rem;
-    padding: 10px;
+    font-size: 0.9rem; /* Smaller text */
+    padding: 8px; /* Reduced padding */
     margin: 5px 0;
     width: 90%;
     max-width: 400px;
@@ -163,10 +163,10 @@ button:hover {
 
 /* Quiz info styling */
 #quizInfo {
-    font-size: 1rem;
+    font-size: 0.9rem; /* Slightly smaller */
     display: flex;
     justify-content: space-between;
     width: 100%;
     padding: 5px;
-    margin-top: 10px;
+    margin-top: 5px;
 }
