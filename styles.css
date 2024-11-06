@@ -10,7 +10,7 @@ body, html {
     font-family: 'Comic Neue', sans-serif;
     background: linear-gradient(135deg, #dfe6e9, #b2bec3);
     color: #333;
-    overflow: hidden; /* Prevents page scrolling */
+    overflow: hidden;
 }
 
 /* Main container setup for mobile */
@@ -22,7 +22,7 @@ body, html {
     width: 100%;
     max-width: 500px;
     height: 100vh; /* Full viewport height */
-    padding: 5px; /* Reduce padding to fit more content */
+    padding: 5px;
     background-color: #ffffff;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
@@ -32,39 +32,18 @@ body, html {
 
 /* Title styling for mobile */
 h1 {
-    font-size: 2rem; /* Smaller title size for mobile */
+    font-size: 2rem;
     color: #2d3436;
     text-align: center;
     margin: 5px 0 10px 0;
 }
 
-/* Dropdown and shuffle button container */
-.top-controls {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px; /* Reduced spacing for mobile */
-}
-
-/* Flashcard set selection dropdown */
-#setSelect {
-    font-size: 1rem;
-    color: #333;
-    background-color: #ecf0f1;
-    border: 1px solid #b2bec3;
-    border-radius: 5px;
-    padding: 5px;
-    width: 60%; /* Narrower for mobile */
-    text-align: center;
-}
-
-/* Flashcard box styling for mobile */
+/* Flashcard box styling */
 .flashcard {
     width: 100%;
     max-width: 500px;
-    height: 50vh; /* Reduce height further */
-    padding: 10px; /* Reduced padding */
+    height: 50vh;
+    padding: 10px;
     margin: 10px 0;
     background-color: #ffffff;
     border: 2px solid #b2bec3;
@@ -78,7 +57,7 @@ h1 {
     box-sizing: border-box;
 }
 
-/* Text for term and definition */
+/* Term and definition styling */
 #termDisplay {
     font-size: 1.5rem;
     font-weight: bold;
@@ -94,47 +73,65 @@ h1 {
     font-weight: bold;
 }
 
-/* Button styling for mobile */
+/* Button styling */
 button {
-    padding: 8px 15px; /* Smaller padding for mobile */
+    padding: 8px 15px;
     font-size: 1rem;
     border: none;
     border-radius: 8px;
-    background-color: #0984e3;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.2s;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-    width: 90%; /* Full width for mobile */
-    max-width: 250px;
     margin: 5px 0;
 }
 
-button:hover {
-    background-color: #74b9ff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+/* Show Definition Button (larger) */
+#showDefinitionButton {
+    width: 90%; /* Larger width for Show Definition */
+    background-color: #0984e3;
 }
 
-#backToFlashcards {
-    background-color: #ff6b6b;
-    font-size: 0.9rem; /* Slightly smaller for mobile */
-    padding: 8px;
+/* Previous and Next Buttons aligned horizontally */
+.controls {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 500px;
+    margin-top: 5px;
+}
+
+#prevButton {
+    background-color: #6c5ce7;
+    width: 48%;
+}
+
+#nextButton {
+    background-color: #00b894;
+    width: 48%;
+}
+
+/* Start Quiz Button centered at the bottom */
+#startQuizButton {
+    width: 90%;
+    background-color: #fdcb6e;
     margin-top: 10px;
 }
 
-/* Controls container for navigation buttons */
-.controls, .quiz-section {
+/* Quiz Option styling centered */
+.quiz-section {
     width: 100%;
     max-width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    margin-top: 10px;
 }
 
-/* Quiz options for mobile */
 .quiz-option {
-    font-size: 0.9rem; /* Smaller text */
-    padding: 8px; /* Reduced padding */
+    font-size: 0.9rem;
+    padding: 8px;
     margin: 5px 0;
     width: 90%;
     max-width: 400px;
@@ -144,6 +141,7 @@ button:hover {
     border-radius: 8px;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    text-align: center;
 }
 
 .quiz-option:hover {
@@ -161,9 +159,9 @@ button:hover {
     color: white;
 }
 
-/* Quiz info styling */
+/* Quiz Info styling */
 #quizInfo {
-    font-size: 0.9rem; /* Slightly smaller */
+    font-size: 0.9rem;
     display: flex;
     justify-content: space-between;
     width: 100%;
