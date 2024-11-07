@@ -1,12 +1,12 @@
 const CACHE_NAME = "infobits-cache-v1";
 const urlsToCache = [
-    "/infobits-flashcards/",              // Home page
-    "/infobits-flashcards/index.html",     // Main HTML file
-    "/infobits-flashcards/styles.css",     // CSS file
-    "/infobits-flashcards/script.js",      // JavaScript file
-    "/infobits-flashcards/manifest.json",  // Manifest file
-    "/infobits-flashcards/icon-192.png",   // 192x192 icon
-    "/infobits-flashcards/icon-512.png"    // 512x512 icon
+    "/infobits-flashcards/",             // Home page
+    "/infobits-flashcards/index.html",   // Main HTML file
+    "/infobits-flashcards/styles.css",   // CSS file
+    "/infobits-flashcards/script.js",    // JavaScript file
+    "/infobits-flashcards/manifest.json",// Manifest file
+    "/infobits-flashcards/icon-192.png", // 192x192 icon
+    "/infobits-flashcards/icon-512.png"  // 512x512 icon
 ];
 
 // Install event - caching all specified files
