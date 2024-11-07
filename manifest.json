@@ -1,7 +1,7 @@
 {
     "name": "InfoBits Flashcards",
     "short_name": "InfoBits",
-    "start_url": "/infobits-flashcards/",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#0984e3",

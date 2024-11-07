@@ -290,6 +290,9 @@ function displayQuizQuestion() {
         button.onclick = () => checkAnswer(option, correctTerm);
         buttonsContainer.appendChild(button);
     });
+
+    // Ensure question tracker is updated for the new question
+    updateQuizInfo();
 }
 
 function checkAnswer(selectedTerm, correctTerm) {
@@ -306,15 +309,15 @@ function checkAnswer(selectedTerm, correctTerm) {
         score++;
     }
 
-    updateQuizInfo();
+    updateQuizInfo(); // Update the score and question number
 
-    // Store the timeout ID
+    // Store the timeout ID for question transition
     quizTimeout = setTimeout(() => {
         quizIndex++;
         if (quizIndex < quizSet.length) {
-            displayQuizQuestion();
+            displayQuizQuestion(); // Display the next question
         } else {
-            endQuizMode();
+            endQuizMode(); // End quiz if all questions are answered
         }
     }, 1000);
 }
@@ -331,32 +334,44 @@ function endQuizMode() {
         quizTimeout = null;
     }
 
+    // Display final score
     document.getElementById('termDisplay').innerText = `Quiz Complete! You scored ${score} out of 20.`;
+    
+    // Hide all quiz-related elements immediately
     document.getElementById('optionsContainer').style.display = 'none';
+    document.getElementById('backToFlashcards').style.display = 'none';
+    document.getElementById('questionCounter').style.display = 'none';
+    document.getElementById('scoreTracker').style.display = 'none';
 
     // Hide or clear the definition display
-    document.getElementById('definitionDisplay').innerText = ''; // Clear any definition text
-    document.getElementById('definitionDisplay').style.display = 'none'; // Hide the definition display
+    document.getElementById('definitionDisplay').innerText = ''; 
+    document.getElementById('definitionDisplay').style.display = 'none';
 
     // Delay before returning to flashcard mode
     setTimeout(() => {
+        // Reset the display text
         document.getElementById('termDisplay').innerText = 'Select a flashcard set to begin.';
-        document.getElementById('definitionDisplay').innerText = ''; // Ensure it's cleared
-        document.getElementById('definitionDisplay').style.display = 'none'; // Keep it hidden
+        document.getElementById('definitionDisplay').innerText = '';
+        document.getElementById('definitionDisplay').style.display = 'none';
 
-        document.querySelectorAll('.top-controls button').forEach(button => button.style.display = 'inline-block');
+        // Show the set selection buttons and start quiz button
+        document.querySelectorAll('.top-controls button').forEach(button => 
+            button.style.display = 'inline-block'
+        );
         document.getElementById('startQuizButton').style.display = 'inline-block';
+
+        // Ensure all quiz-related elements remain hidden
         document.getElementById('questionCounter').style.display = 'none';
         document.getElementById('scoreTracker').style.display = 'none';
-
-        // Hide the "Back to Flashcards" button
         document.getElementById('backToFlashcards').style.display = 'none';
+        document.getElementById('optionsContainer').style.display = 'none';
 
-        hideFlashcardButtons(); // Ensure buttons are hidden when viewing the score
-
-        // Hide the shuffle button when returning to the default screen
+        // Hide flashcard-specific buttons
+        hideFlashcardButtons();
+        
+        // Hide the shuffle button
         document.getElementById('shuffleButton').style.display = 'none';
-    }, 2000); // 2-second delay for score display
+    }, 2000); // 2-second delay
 }
 
 function showFlashcardButtons() {

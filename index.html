@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>InfoBits Flashcards</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <link href="styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
 </head>
 <body>
     <div class="container">
         <h1>InfoBits Flashcards</h1>
-
-        <!-- Flashcard Set Buttons -->
         <div class="top-controls">
             <button onclick="selectSet('set1')">Set 1</button>
             <button onclick="selectSet('set2')">Set 2</button>
@@ -23,36 +23,38 @@
             <button onclick="selectSet('set9')">Set 9</button>
             <button onclick="selectSet('set10')">Set 10</button>
         </div>
-
-        <!-- Flashcard Display -->
         <div class="flashcard">
-            <!-- Shuffle button should be present but hidden initially -->
-            <button id="shuffleButton" onclick="shuffleSet()" style="display: none;">🔄</button>
             <div id="termDisplay">Select a flashcard set to begin.</div>
             <div id="definitionDisplay" class="definitionDisplay">Definition will appear here.</div>
+            <div id="shuffleContainer">
+                <button id="shuffleButton" onclick="shuffleSet()" style="display: none;">🔀 Shuffle</button>
+            </div>
         </div>
-
-        <!-- Navigation Controls for Previous, Show Definition, and Next -->
         <div class="controls">
-            <button id="prevButton" onclick="previousCard()" style="display: none;">Previous Card</button>
-            <button id="showDefinitionButton" onclick="showDefinition()" style="display: none;">Show Definition</button>
-            <button id="nextButton" onclick="nextCard()" style="display: none;">Next Card</button>
+            <button id="prevButton" onclick="previousCard()">Previous Card</button>
+            <button id="showDefinitionButton" onclick="showDefinition()">Show Definition</button>
+            <button id="nextButton" onclick="nextCard()">Next Card</button>
         </div>
-
-        <!-- Quiz Section -->
         <div class="quiz-section">
             <button id="startQuizButton" onclick="startQuiz()">Start Quiz</button>
             <div id="quizInfo">
                 <span id="questionCounter" style="display: none;">Question 1/20</span>
                 <span id="scoreTracker" style="display: none;">Score: 0</span>
             </div>
-            <!-- Options container for quiz questions -->
             <div id="optionsContainer" style="display: none;"></div>
             <button id="backToFlashcards" onclick="endQuizMode()" style="display: none;">Back to Flashcards</button>
         </div>
     </div>
-
-    <!-- Link to your JavaScript file with 'defer' to ensure it loads after HTML -->
-    <script src="script.js" defer></script>
+    <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+            .then(registration => {
+                console.log('Service Worker registered with scope:', registration.scope);
+            }).catch(error => {
+                console.log('Service Worker registration failed:', error);
+            });
+        }
+    </script>
 </body>
 </html>
